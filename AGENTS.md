@@ -55,6 +55,14 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - **Always use `gh` CLI** for all git operations (commit, push, PR, review, etc.)
 - Do not use git commands directly (git commit, git push, etc.)
 - Use gh CLI for creating PRs, viewing PRs, commenting on PRs
+- **Before committing:** Check if project has `.rule_git` folder. If exists, read and follow those rules
+- **Before starting code work:** Pull latest code from main branch
+- **After push completion:** Checkout back to the main branch
+
+## Code Review Workflow
+
+- After making code changes, send only the modified portions for review (not the entire file)
+- Highlight what was changed for clarity
 
 ## Safety
 
