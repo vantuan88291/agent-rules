@@ -50,6 +50,12 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - All projects are located in `/Volumes/SSD512/code`
 - Always work within this directory for code operations
 
+## Git Operations
+
+- **Always use `gh` CLI** for all git operations (commit, push, PR, review, etc.)
+- Do not use git commands directly (git commit, git push, etc.)
+- Use gh CLI for creating PRs, viewing PRs, commenting on PRs
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
