@@ -140,7 +140,3 @@ All commands live in `{baseDir}/scripts/jira.sh`.
 - `hours` filters by `JIRA_EMAIL`; `hours-day` returns all users with totals per issue and user.
 - Outputs for hours commands are JSON for reuse in other tools.
 - Status transitions are validated against the server-provided transition list before applying.
-
-## Rules
-
-- **Always return original content** - When displaying ticket information (title, description, comments, etc.), return the original text as-is without translation. Only summarize or translate if user explicitly requests translation.
