@@ -10,6 +10,12 @@
 - All projects are located in `/Volumes/SSD512/code`
 - Always work within this directory for code operations
 
+## Project-Specific Rules
+
+- **Before coding:** Check if project has `AGENTS.md` or `.cursor/` folder
+- If exists, read those rules and follow them
+- Project-specific rules take precedence over workspace rules
+
 ## Code Review Workflow
 
 - After making code changes, send only the modified portions for review (not the entire file)
