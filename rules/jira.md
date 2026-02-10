@@ -2,7 +2,7 @@
 
 ## Ticket Handling Workflow
 
-Note: jira env already setted up, example: `echo $JIRA_API_TOKEN`
+Note: jira env already setted up at .zshrc, example: `echo $JIRA_API_TOKEN`
 1. **Read & understand ticket first** - When asked to check a ticket:
    - Read title, description, requirements carefully
    - Understand the goal and scope of the ticket

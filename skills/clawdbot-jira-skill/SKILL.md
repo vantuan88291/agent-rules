@@ -22,7 +22,7 @@ metadata:
 Work with Jira issues and worklogs from Clawdbot (search, status, create, log work, worklog summaries).
 
 ## Setup
-- already setted up env
+- already setted up env at .zshrc
 - example: `echo $JIRA_API_TOKEN`
 ## Quick Commands
 
