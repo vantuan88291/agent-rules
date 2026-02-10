@@ -1,5 +1,16 @@
 # Jira Rules
 
+## Environment Setup
+
+**Important:** Before running any Jira commands, if commands failed, try to run:
+```bash
+source ~/.zshrc
+```
+
+This loads Jira environment variables (JIRA_URL, JIRA_EMAIL, JIRA_API_TOKEN) from your shell configuration.
+
+---
+
 ## Ticket Handling Workflow
 
 Note: jira env already setted up at .zshrc, example: `echo $JIRA_API_TOKEN`
