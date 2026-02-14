@@ -4,7 +4,9 @@
 - Name: Tuấn
 - Uses Openclaw with AI named "Culi"
 - Works with React Native & JavaScript
-- Project directory: `/Volumes/SSD512/code`
+- Environment: Raspberry Pi 5
+- Project directory: `~/Documents/code` (on Raspberry Pi 5)
+- Unified tool: `pi-manager` skill handles all system, power, bluetooth, and network tasks.
 
 ## Workflow Rules (Critical)
 1. **Before any code edit:** Report what will change, ask for confirmation

@@ -14,6 +14,6 @@ Tuấn uses Openclaw to have Culi (AI) help with:
 - Git operations (commit, push, PR creation)
 - Code review
 
-Tuấn works with React Native & JavaScript projects located in `/Volumes/SSD512/code`
+Tuấn works with React Native & JavaScript projects on a Raspberry Pi 5, located in `~/Documents/code`.
 
 Tuấn wants explicit confirmation before any code changes or git operations.

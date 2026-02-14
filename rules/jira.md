@@ -4,7 +4,7 @@
 
 **Important:** Before running any Jira commands, if commands failed, try to run:
 ```bash
-source ~/.zshrc
+source ~/.bashrc
 ```
 
 This loads Jira environment variables (JIRA_URL, JIRA_EMAIL, JIRA_API_TOKEN) from your shell configuration.
@@ -13,7 +13,7 @@ This loads Jira environment variables (JIRA_URL, JIRA_EMAIL, JIRA_API_TOKEN) fro
 
 ## Ticket Handling Workflow
 
-Note: jira env already setted up at .zshrc, example: `echo $JIRA_API_TOKEN`
+Note: jira env already setted up at .bashrc, example: `echo $JIRA_API_TOKEN`
 1. **Read & understand ticket first** - When asked to check a ticket:
    - Read title, description, requirements carefully
    - Understand the goal and scope of the ticket
