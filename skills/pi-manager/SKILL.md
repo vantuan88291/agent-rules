@@ -37,3 +37,15 @@ The primary tool for managing Tuấn's Raspberry Pi 5.
 - **Local IP**: `hostname -I`
 - **Public IP**: `curl -s https://ifconfig.me`
 - **Tailscale Status**: `tailscale status`
+
+## 6. Audio Management
+- **Check Volume**: `wpctl get-volume @DEFAULT_AUDIO_SINK@`
+- **Increase Volume (5%)**: `wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+`
+- **Decrease Volume (5%)**: `wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-`
+- **Mute/Unmute**: `wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle`
+
+## 7. Process Management
+- **Kill Chromium/Chrome**: `pkill chromium` or `pkill chrome`
+- **List Top Processes**: `top -b -n 1 | head -n 20`
+
+
