@@ -37,3 +37,4 @@ coverage/
 *.pem
 .env
 .env.local
+.openclaw
