@@ -1,8 +1,8 @@
 # MEMORY.md - Long-Term Memory
 
 ## About Tuấn
-- Name: Tuấn
-- Uses Openclaw with AI named "Culi"
+- Name: Levi
+- Uses Openclaw with AI named "leader_bot"
 - Works with React Native & JavaScript
 - Environment: Raspberry Pi 5
 - Project directory: `~/Documents/code` (on Raspberry Pi 5)

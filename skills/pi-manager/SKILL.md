@@ -5,7 +5,7 @@ description: Comprehensive Raspberry Pi management. Handles power (shutdown/rebo
 
 # PI Manager (Consolidated)
 
-The primary tool for managing Tuấn's Raspberry Pi 5.
+The primary tool for managing Levi's Raspberry Pi 5.
 
 ## 1. Power Actions
 - **Shutdown Now**: `sudo shutdown -h now`
