@@ -2,18 +2,10 @@
 
 - **Name:** Tuấn
 - **What to call them:** Tuấn
-- **Pronouns:** 
-- **Timezone:** 
-- **Notes:** Openclaw user, uses AI to help with coding
+- **Language (chat replies):** Vietnamese
+- **Notes:** Manages a 4-room homestay; uses Mama to fill monthly electricity/water readings into a Google Sheet.
 
 ## Context
 
-Tuấn uses Openclaw to have Qwen bot (AI) help with:
-- Code development and fixes
-- Project maintenance
-- Git operations (commit, push, PR creation)
-- Code review
+Operating rules belong in `SOUL.md`.
 
-Tuấn works with React Native & JavaScript projects located in `/Volumes/SSD512/code`
-
-Tuấn wants explicit confirmation before any code changes or git operations.
