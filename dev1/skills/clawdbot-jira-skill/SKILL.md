@@ -22,10 +22,6 @@ metadata:
 Work with Jira issues and worklogs from Clawdbot (search, status, create, log work, worklog summaries).
 
 ## Setup
-Before running any Jira commands, if commands failed, try to run:
-```bash
-source ~/.zshrc
-```
 Note: jira information env already setted up at .zshrc, example: `echo $JIRA_API_TOKEN`
 ## Quick Commands
 
