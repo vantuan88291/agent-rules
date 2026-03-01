@@ -14,6 +14,6 @@ Levi uses Openclaw to have Leader bot (AI) help with:
 - Git operations (commit, push, PR creation)
 - Code review
 
-Levi works with React Native & JavaScript projects on a Raspberry Pi 5, located in `~/Documents/code`.
+Levi works with React Native & JavaScript projects on a Raspberry Pi 5, located in `/home/vantuan88291/Documents/code/reactnative`.
 
 Levi wants explicit confirmation before any code changes or git operations.

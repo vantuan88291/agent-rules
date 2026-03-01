@@ -7,7 +7,7 @@
 
 ## Directory
 
-- All projects are located in `/home/vantuan88291/Documents/code`
+- All projects are located in `/home/vantuan88291/Documents/code/reactnative`
 - Always work within this directory for code operations
 
 ## Project-Specific Rules
