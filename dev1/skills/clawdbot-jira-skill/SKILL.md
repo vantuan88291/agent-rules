@@ -22,7 +22,11 @@ metadata:
 Work with Jira issues and worklogs from Clawdbot (search, status, create, log work, worklog summaries).
 
 ## Setup
-Note: jira information env already setted up at .zshrc, example: `echo $JIRA_API_TOKEN`
+Before running any Jira commands, if commands failed, try to run:
+```bash
+source ~/.bashrc
+```
+Note: jira information env already setted up at .bashrc, example: `echo $JIRA_API_TOKEN`
 ## Quick Commands
 
 All commands live in `{baseDir}/scripts/jira.sh`.
