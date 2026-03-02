@@ -4,7 +4,7 @@
 
 **Important:** Before running any Jira commands, if commands failed, try to run:
 ```bash
-source ~/.zshrc
+source ~/.bashrc
 ```
 
 This loads Jira environment variables (JIRA_URL, JIRA_EMAIL, JIRA_API_TOKEN) from your shell configuration.
