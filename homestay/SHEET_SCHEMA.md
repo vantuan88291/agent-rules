@@ -2,13 +2,13 @@
 
 ### Spreadsheet IDs
 
-- `SPREADSHEET_ID`: `1Rb1PHfMyM1bGoqMWQPSddLPSma_5b_pqs9XtB5EIHuw`
+- `SPREADSHEET_ID`: `16GmO1J3ihsIiRq0ab5QwazrBkX5IyZfDqUm_sCS-TZA`
 
 Update `SPREADSHEET_ID` here when you migrate to a new sheet.
 
 ### Apps Script (month rollover)
 
-- `MONTH_ROLLOVER_SCRIPT_ID`: `1GfYVqcdz2SaqFNg3QhSOzI7VZ5o7nmgH4IKLkjbM-Lf-oz3hoMSzXB0g`
+- `MONTH_ROLLOVER_SCRIPT_ID`: `1JfzAYwgdIk8mrEEg8JVcmnFvEvOb60urZtny80iwqAiOquk9SAOJeG9C`
 
 ### Tabs (worksheets)
 
