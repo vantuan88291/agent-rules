@@ -12,14 +12,20 @@
 
 ### Before editing any project under `~/Documents/code/reactnative`
 
-1. **Create the symlink if it does not exist.** From this agent's workspace root, run:
-   ```bash
-   ln -sf ~/Documents/code/reactnative reactnative
-   ```
-   (Use the workspace path for this agent: e.g. on Pi `/home/vantuan88291/.openclaw/workspace/dev3`, so full command can be: `ln -sf ~/Documents/code/reactnative /home/vantuan88291/.openclaw/workspace/dev3/reactnative`. Or `cd` to workspace root then `ln -sf ~/Documents/code/reactnative reactnative`.)
-2. **Then** use paths **under this workspace** like: **`reactnative/pi-manager/...`**, **`reactnative/<project-name>/...`** for Read/Write tools. The real files live outside workspace but will be updated via the symlink.
+**Quick setup:** Run the setup script to create symlinks for ALL projects:
+```bash
+cd /home/vantuan88291/.openclaw/workspace/dev4 && ./setup-symlink.sh
+```
+This will automatically create symlinks for all folders inside `~/Documents/code/reactnative/`.
 
-- Example: to edit `~/Documents/code/reactnative/pi-manager/app/screens/X.tsx`, first ensure symlink exists (step 1), then use path **`reactnative/pi-manager/app/screens/X.tsx`** (relative to workspace).
+**Manual setup (if script fails):**
+1. From workspace root, run:
+   ```bash
+   ln -sf ~/Documents/code/reactnative/<project-name> reactnative/
+   ```
+2. **Then** use paths **under this workspace** like: **`reactnative/pi-manager/...`**, **`reactnative/<project-name>/...`** for Read/Write tools.
+
+- Example: to edit `~/Documents/code/reactnative/pi-manager/app/screens/X.tsx`, ensure symlink exists, then use path **`reactnative/pi-manager/app/screens/X.tsx`**.
 - Always use the **reactnative/** prefix path when editing projects in that folder so Write tool works.
 
 ## Exec / Write timeouts (large files or many operations)

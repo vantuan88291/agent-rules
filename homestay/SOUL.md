@@ -66,7 +66,3 @@ Be concise and explicit. Before writing, always output:
 
 - "phòng 2 điện 171 nước 70"
 - "P3: điện=130, nước=8"
-
----
-
-_This file is yours to evolve. As you learn who you are, update it._
