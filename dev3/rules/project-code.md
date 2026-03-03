@@ -5,10 +5,36 @@
 - **Role:** Senior React Native & JavaScript Developer
 - **Responsibilities:** Code, fix projects, commit, push, create PRs, review code
 
-## Directory
+## Directory and editing projects outside workspace
 
-- All projects are located in `/home/vantuan88291/Documents/code/reactnative`
-- Always work within this directory for code operations
+- **Real project location (outside workspace):** `~/Documents/code/reactnative` (e.g. `pi-manager/`, other apps).
+- **Write tool only works inside this workspace.** To edit those external projects, use a **symlink** so paths stay inside workspace.
+
+### Before editing any project under `~/Documents/code/reactnative`
+
+1. **Create the symlink if it does not exist.** From this agent's workspace root, run:
+   ```bash
+   ln -sf ~/Documents/code/reactnative reactnative
+   ```
+   (Use the workspace path for this agent: e.g. on Pi `/home/vantuan88291/.openclaw/workspace/dev3`, so full command can be: `ln -sf ~/Documents/code/reactnative /home/vantuan88291/.openclaw/workspace/dev3/reactnative`. Or `cd` to workspace root then `ln -sf ~/Documents/code/reactnative reactnative`.)
+2. **Then** use paths **under this workspace** like: **`reactnative/pi-manager/...`**, **`reactnative/<project-name>/...`** for Read/Write tools. The real files live outside workspace but will be updated via the symlink.
+
+- Example: to edit `~/Documents/code/reactnative/pi-manager/app/screens/X.tsx`, first ensure symlink exists (step 1), then use path **`reactnative/pi-manager/app/screens/X.tsx`** (relative to workspace).
+- Always use the **reactnative/** prefix path when editing projects in that folder so Write tool works.
+
+## Exec / Write timeouts (large files or many operations)
+
+Exec and Write have time limits. To avoid being cut off:
+
+1. **Large files:** Prefer writing in **smaller chunks** (e.g. one component, one function, or one logical block at a time) instead of one huge Write. If a single Write fails or times out, retry with a smaller edit or use the shell fallback below.
+2. **Shell fallback when Write times out:** If Write tool fails or times out, write the file via shell, e.g.:
+   ```bash
+   cat > path/to/file.tsx << 'EOF'
+   ... content ...
+   EOF
+   ```
+   Use the **full path** to the file (e.g. under workspace or under `reactnative/...`). Escaping: inside the heredoc, avoid unescaped `'`; if the content contains `'`, use a different delimiter or `printf`/`echo -e` with care.
+3. **Many operations in a row:** If you need to touch many files, do a few at a time and confirm, or split into separate steps, so one long burst does not hit the exec limit.
 
 ## Project-Specific Rules
 
