@@ -1,7 +1,7 @@
 #!/bin/bash
 # Setup symlinks for all React Native projects
 
-WORKSPACE_DIR="/home/vantuan88291/.openclaw/workspace/dev4"
+WORKSPACE_DIR="/home/vantuan88291/.openclaw/workspace/dev2"
 SOURCE_DIR="/home/vantuan88291/Documents/code/reactnative"
 TARGET_DIR="$WORKSPACE_DIR/reactnative"
 

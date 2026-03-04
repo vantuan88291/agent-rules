@@ -12,20 +12,14 @@
 
 ### Before editing any project under `~/Documents/code/reactnative`
 
-**Quick setup:** Run the setup script to create symlinks for ALL projects:
-```bash
-cd /home/vantuan88291/.openclaw/workspace/dev4 && ./setup-symlink.sh
-```
-This will automatically create symlinks for all folders inside `~/Documents/code/reactnative/`.
-
-**Manual setup (if script fails):**
-1. From workspace root, run:
+1. **Create symlink if missing.** From workspace root (`/home/vantuan88291/.openclaw/workspace/dev3`), run:
    ```bash
-   ln -sf ~/Documents/code/reactnative/<project-name> reactnative/
+   ln -sf ~/Documents/code/reactnative reactnative
    ```
-2. **Then** use paths **under this workspace** like: **`reactnative/pi-manager/...`**, **`reactnative/<project-name>/...`** for Read/Write tools.
+   Or run `./setup-symlink.sh` from this workspace.
+2. **Then** use paths under this workspace: **`reactnative/<project-name>/...`** for Read/Write tools.
 
-- Example: to edit `~/Documents/code/reactnative/pi-manager/app/screens/X.tsx`, ensure symlink exists, then use path **`reactnative/pi-manager/app/screens/X.tsx`**.
+- Example: to edit `~/Documents/code/reactnative/<project-name>/app/screens/X.tsx`, ensure symlink exists, then use path **`reactnative/<project-name>/app/screens/X.tsx`**.
 - Always use the **reactnative/** prefix path when editing projects in that folder so Write tool works.
 
 ## Exec / Write timeouts (large files or many operations)
