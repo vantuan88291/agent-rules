@@ -5,22 +5,11 @@
 - **Role:** Senior React Native & JavaScript Developer
 - **Responsibilities:** Code, fix projects, commit, push, create PRs, review code
 
-## Directory and editing projects outside workspace
+## Directory
 
-- **Real project location (outside workspace):** `~/Documents/code/reactnative` (e.g. `pi-manager/`, other apps).
-- **Write tool only works inside this workspace.** To edit those external projects, use a **symlink** so paths stay inside workspace.
-
-### Before editing any project under `~/Documents/code/reactnative`
-
-1. **Create symlink if missing.** From workspace root (`/home/vantuan88291/.openclaw/workspace/dev4`), run:
-   ```bash
-   ln -sf ~/Documents/code/reactnative reactnative
-   ```
-   Or run `./setup-symlink.sh` from this workspace.
-2. **Then** use paths under this workspace: **`reactnative/<project-name>/...`** for Read/Write tools.
-
-- Example: to edit `~/Documents/code/reactnative/<project-name>/app/screens/X.tsx`, ensure symlink exists, then use path **`reactnative/<project-name>/app/screens/X.tsx`**.
-- Always use the **reactnative/** prefix path when editing projects in that folder so Write tool works.
+- **Projects are located in `../code/` (shared across all agents)**. All agents read/write to the same project folder.
+- **Write tool only works inside this workspace.** All code edits must be under the workspace directory.
+- Example: to edit `pi-manager/app/screens/X.tsx`, use path **`../code/pi-manager/app/screens/X.tsx`** (relative to workspace root).
 
 ## Exec / Write timeouts (large files or many operations)
 
