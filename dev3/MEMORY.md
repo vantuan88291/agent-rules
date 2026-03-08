@@ -281,8 +281,288 @@ git push -u origin feat/feature-name
 
 ---
 
+## 🐛 Common Bugs & Solutions - Lessons Learned
+
+### Bug Pattern #1: `spacing is not defined`
+
+**Symptom:**
+```
+ReferenceError: spacing is not defined at ComponentName
+```
+
+**Root Cause:**
+- Style defined as `ViewStyle` but uses `spacing` variable
+- `spacing` only available in `ThemedStyle<ViewStyle>` function parameter
+
+**Wrong:**
+```typescript
+const $myStyle: ViewStyle = {
+  gap: spacing.md,  // ❌ spacing is undefined!
+}
+```
+
+**Correct:**
+```typescript
+const $myStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  gap: spacing.md,  // ✅ spacing from parameter
+})
+```
+
+**Usage Pattern:**
+```typescript
+// ThemedStyle<ViewStyle> - MUST wrap with themed()
+const $card: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
+  backgroundColor: colors.surface,
+  padding: spacing.lg,
+})
+<View style={themed($card)}>  // ✅ themed() wrapper required
+
+// ViewStyle - NO themed() wrapper
+const $row: ViewStyle = {
+  flexDirection: "row",
+  gap: 8,  // Plain number, not spacing token
+}
+<View style={$row}>  // ✅ No themed() needed
+```
+
+**Reference:** Check `ControlMenuScreen.tsx` for correct pattern
+
+---
+
+### Bug Pattern #2: `themed() wrapper on plain ViewStyle`
+
+**Symptom:**
+```
+TypeError: themed is not a function / style is not defined
+```
+
+**Root Cause:**
+- Wrapping plain `ViewStyle` with `themed()`
+- `themed()` only works with `ThemedStyle<T>` functions
+
+**Wrong:**
+```typescript
+const $plainStyle: ViewStyle = { flexDirection: "row" }
+<View style={themed($plainStyle)}>  // ❌ themed() expects ThemedStyle!
+```
+
+**Correct:**
+```typescript
+const $plainStyle: ViewStyle = { flexDirection: "row" }
+<View style={$plainStyle}>  // ✅ Use directly
+```
+
+**Quick Check:**
+- If style uses `colors.xxx` or `spacing.xxx` → `ThemedStyle<ViewStyle>` + wrap `themed()`
+- If style uses plain values → `ViewStyle` + NO `themed()`
+
+---
+
+### Bug Pattern #3: `AUTH_REQUIRED` in browser (DEBUG mode)
+
+**Symptom:**
+```
+Authentication Error ❌ error_auth_required
+```
+
+**Root Cause:**
+- Server rejects connections without Telegram initData
+- DEBUG mode not enabled
+
+**Solution:**
+1. Set `DEBUG=true` in both `.env` files:
+   ```bash
+   # .env
+   EXPO_PUBLIC_DEBUG=true
+   
+   # server/.env
+   DEBUG=true
+   ```
+
+2. Update `scripts/start-with-tunnel.sh` to preserve DEBUG:
+   ```bash
+   cat > "$SERVER_ENV_FILE" << ENVEOF
+   PORT=3001
+   DEBUG=true  # ← Add this!
+   ENVEOF
+   ```
+
+3. Server code checks DEBUG:
+   ```typescript
+   const isDebug = process.env.DEBUG === "true"
+   if (isDebug) {
+     // Allow browser connection without auth
+   }
+   ```
+
+**Note:** Set `DEBUG=false` before production deployment!
+
+---
+
+### Bug Pattern #4: Script overwrites .env variables
+
+**Symptom:**
+- Custom env variables disappear after `yarn start:full`
+- Server doesn't have expected configuration
+
+**Root Cause:**
+- `start-with-tunnel.sh` overwrites `server/.env` completely
+
+**Solution:**
+```bash
+# In start-with-tunnel.sh, add required variables:
+cat > "$SERVER_ENV_FILE" << ENVEOF
+PORT=3001
+TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
+ALLOWED_ORIGINS=$TUNNEL_URL,...
+ADMIN_TELEGRAM_ID=$TELEGRAM_ID
+DEBUG=true  # ← Preserve this!
+ENVEOF
+```
+
+**Best Practice:** Always check what variables script writes!
+
+---
+
+### Bug Pattern #5: Browser cache shows old code
+
+**Symptom:**
+- Code changes don't appear after rebuild
+- Old errors persist
+- Console shows old file hashes
+
+**Solution:**
+1. **Hard refresh with cache clear:**
+   - Chrome: F12 → Network → "Disable cache" → Ctrl+Shift+R
+   - Or: Ctrl+Shift+Delete → Clear cache → Reload
+
+2. **Clear Metro cache:**
+   ```bash
+   rm -rf dist node_modules/.cache .expo
+   npx expo export --platform web --clear
+   ```
+
+3. **Check file hash in URL:**
+   - Old: `index-abc123.js`
+   - New: `index-def456.js`
+   - Different hash = new build ✓
+
+---
+
+## 📝 Development Best Practices
+
+### 1. Always Reference Working Code
+
+**Before implementing:**
+- Check existing screens for patterns (`ControlMenuScreen.tsx`, `SettingsScreen.tsx`)
+- Copy style patterns exactly
+- Match import statements
+
+**Example:**
+```typescript
+// Import pattern from ControlMenuScreen.tsx
+import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/theme/types"
+
+const { themed, theme } = useAppTheme()
+
+// Style pattern
+const $card: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
+  backgroundColor: colors.surface,
+  padding: spacing.lg,
+})
+
+// Usage
+<View style={themed($card)}>
+```
+
+### 2. Theme Token Checklist
+
+**When using theme:**
+- [ ] Import `ThemedStyle` from `@/theme/types`
+- [ ] Destructure `themed` from `useAppTheme()`
+- [ ] Use `colors.xxx` not hardcoded colors
+- [ ] Use `spacing.xxx` not hardcoded numbers
+- [ ] Wrap with `themed()` when using in JSX
+
+**When NOT using theme:**
+- [ ] Use `ViewStyle` type
+- [ ] Use plain numbers for spacing
+- [ ] Use hardcoded colors if needed
+- [ ] NO `themed()` wrapper
+
+### 3. DEBUG Mode for Testing
+
+**Enable browser testing:**
+```bash
+# .env
+EXPO_PUBLIC_DEBUG=true
+
+# server/.env
+DEBUG=true
+
+# start-with-tunnel.sh (preserve it)
+echo "DEBUG=true" >> "$SERVER_ENV_FILE"
+```
+
+**Console logs to check:**
+```
+[socket] DEBUG mode: allowing browser connection without auth
+[SocketProvider] DEBUG mode: connecting without Telegram auth
+```
+
+### 4. Build & Cache Management
+
+**Always clear cache when:**
+- Changing component styles
+- Fixing "spacing not defined" errors
+- After git merge conflicts
+- When browser shows old code
+
+**Command:**
+```bash
+rm -rf dist node_modules/.cache .expo
+npx expo export --platform web --clear
+cp -r dist/* server/public/
+```
+
+### 5. Error Debugging Flow
+
+1. **Read full error message** - Often tells exact file/line
+2. **Check console log** - Look for patterns (spacing, themed, etc.)
+3. **Reference working code** - Compare with similar components
+4. **Check imports** - Missing `ThemedStyle`, `useAppTheme`, etc.
+5. **Clear cache & rebuild** - Often fixes stale code issues
+6. **Test in browser with DEBUG=true** - Easier to see console errors
+
+---
+
+## 🔧 Quick Reference Commands
+
+```bash
+# Clear all caches and rebuild
+rm -rf dist node_modules/.cache .expo
+npx expo export --platform web --clear
+cp -r dist/* server/public/
+
+# Check if DEBUG mode is enabled
+cat .env | grep DEBUG
+cat server/.env | grep DEBUG
+
+# Check server logs
+tail -f /tmp/server.log | grep -E "DEBUG|socket|error"
+
+# Check tunnel URL
+grep trycloudflare.com /tmp/tunnel.log | head -1
+
+# Restart server only (no tunnel rebuild)
+cd server && pkill -f "tsx watch" && npm run dev &
+```
+
+---
+
 ## 📌 Last Updated
 
-**Date:** 2026-03-07  
+**Date:** 2026-03-08  
 **By:** Dev3 bot  
-**Context:** After fixing runtime socket URL detection + UI improvements (PR #15, #16)
+**Context:** After fixing CronJob CreateModal bugs - spacing undefined, themed() usage, DEBUG mode (PR #19)
