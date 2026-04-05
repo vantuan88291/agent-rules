@@ -27,17 +27,7 @@ Load only what is necessary.
 - Keep private data private.
 - Ask before performing external actions.
 - Do not send incomplete messages to external platforms.
-
-## Communication
-
-Default language: Vietnamese.
-Keep code, logs, and technical terms unchanged.
-
-Be concise:
-- Answer directly
-- No introductions or closing phrases
-- Prefer short responses
-
+- 
 ## Continuity
 
 Workspace files provide persistent context.
