@@ -4,14 +4,15 @@ import urllib.request
 import urllib.parse
 import re
 import json
+import os
 import sys
 from datetime import date
 from http.cookiejar import CookieJar
 
-# ── Config ────────────────────────────────────────────────────────────────────
-BOT_TOKEN = "8435282161:AAHswm8cckiBHYIGWhrl_GGwPmEYErLN96Y"
-CHAT_ID = "-5120943963"
-THRESHOLD = 20600  # alert if SGD buy_bank_transfer >= this value
+# ── Config (từ env vars) ──────────────────────────────────────────────────────
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+CHAT_ID   = os.environ.get("CHAT_ID",   "")
+THRESHOLD = int(os.environ.get("THRESHOLD", 0))  # alert if SGD buy_bank_transfer >= this value
 # ─────────────────────────────────────────────────────────────────────────────
 
 UA = (
@@ -70,10 +71,12 @@ def get_sgd_rate(target_date=None):
     return None, target_date
 
 
-def send_telegram(message):
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+def send_telegram(message, bot_token=None, chat_id=None):
+    bot_token = bot_token or BOT_TOKEN
+    chat_id = chat_id or CHAT_ID
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     payload = json.dumps({
-        "chat_id": CHAT_ID,
+        "chat_id": chat_id,
         "text": message,
         "parse_mode": "HTML",
     }).encode("utf-8")
@@ -87,8 +90,20 @@ def send_telegram(message):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="SGD rate alert via Telegram")
+    parser.add_argument("--bot-token",  default=BOT_TOKEN, required=not BOT_TOKEN, help="Telegram bot token (hoặc env BOT_TOKEN)")
+    parser.add_argument("--chat-id",    default=CHAT_ID,   required=not CHAT_ID,   help="Telegram chat ID (hoặc env CHAT_ID)")
+    parser.add_argument("--threshold",  default=THRESHOLD, required=not THRESHOLD, type=int, help="Ngưỡng cảnh báo VND (hoặc env THRESHOLD)")
+    parser.add_argument("--date",       default=None,      help="Ngày YYYY-MM-DD (mặc định: hôm nay)")
+    args = parser.parse_args()
+
+    bot_token = args.bot_token
+    chat_id   = args.chat_id
+    threshold = args.threshold
+
     try:
-        sgd, target_date = get_sgd_rate()
+        sgd, target_date = get_sgd_rate(args.date)
     except Exception as e:
         print(f"Lỗi khi lấy tỷ giá: {e}", file=sys.stderr)
         sys.exit(1)
@@ -103,23 +118,23 @@ def main():
         sys.exit(1)
 
     buy_rate = float(buy_rate)
-    print(f"SGD mua CK hôm nay ({target_date}): {buy_rate:,.0f} VND (ngưỡng: {THRESHOLD:,})")
+    print(f"SGD mua CK hôm nay ({target_date}): {buy_rate:,.0f} VND (ngưỡng: {threshold:,})")
 
-    if buy_rate >= THRESHOLD:
+    if buy_rate >= threshold:
         message = (
             f"🔔 <b>Cảnh báo tỷ giá SGD</b>\n\n"
             f"Giá mua SGD hôm nay là: <b>{buy_rate:,.0f} VND</b>\n"
-            f"Ngưỡng cảnh báo: {THRESHOLD:,} VND\n"
+            f"Ngưỡng cảnh báo: {threshold:,} VND\n"
             f"Ngày: {target_date}"
         )
         try:
-            send_telegram(message)
-            print(f"✅ Đã gửi Telegram alert (giá {buy_rate:,.0f} >= ngưỡng {THRESHOLD:,})")
+            send_telegram(message, bot_token, chat_id)
+            print(f"✅ Đã gửi Telegram alert (giá {buy_rate:,.0f} >= ngưỡng {threshold:,})")
         except Exception as e:
             print(f"Lỗi gửi Telegram: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        print(f"⏸️  Chưa đạt ngưỡng, không gửi alert ({buy_rate:,.0f} < {THRESHOLD:,})")
+        print(f"⏸️  Chưa đạt ngưỡng, không gửi alert ({buy_rate:,.0f} < {threshold:,})")
 
 
 if __name__ == "__main__":
